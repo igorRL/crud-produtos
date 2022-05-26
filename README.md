@@ -26,11 +26,13 @@
 
 
 <h3>Descrição do projeto</h3>
-Obrigatório: Utilizar PHP sem framework, usar o padrão MVC, banco de dados MySQL e Bootstrap.
-1) Tela1 - listar todos os produtos.
-2) Tela1 - terá o botão para 'Cadastro de Produto'
-3) Tela1 - na listagem dos produtos cadastrados, adicionar em cada linha de produto o botão de 'Editar' e o botão de 'Excluir'.
-4) Tela2 - tela de cadastro, com as seguintes informações: ID, Descrição, ValorVenda, Estoque, Imagens.
-5) Tela3 - tela de edição.
-6) Tela4 - tela de exclusão, obs.: pode ser uma modal no lugar de uma página.
-7) Tela5 - IMPORTANTE - upload de imagens, após cadastrar um produto, poderá adicionar 1 ou mais fotos para o mesmo produto.
+<i>Conforme solicitado pela Excellent Sistemas:</i><br>
+<p>Obrigatório: Utilizar PHP sem framework, usar o padrão MVC, banco de dados MySQL e Bootstrap.</p>
+
+<p>1) Tela1 - listar todos os produtos.</p>
+<p>2) Tela1 - terá o botão para 'Cadastro de Produto'</p>
+<p>3) Tela1 - na listagem dos produtos cadastrados, adicionar em cada linha de produto o botão de 'Editar' e o botão de 'Excluir'.</p>
+<p>4) Tela2 - tela de cadastro, com as seguintes informações: ID, Descrição, ValorVenda, Estoque, Imagens.
+5) Tela3 - tela de edição.</p>
+<p>6) Tela4 - tela de exclusão, obs.: pode ser uma modal no lugar de uma página.</p>
+<p>7) Tela5 - IMPORTANTE - upload de imagens, após cadastrar um produto, poderá adicionar 1 ou mais fotos para o mesmo produto.</p>
