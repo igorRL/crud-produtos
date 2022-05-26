@@ -1,2 +1,4 @@
 # crud_produtos
-![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
+Este aplicativo está em desenvolvimento por Igor Rodrigues Lage
+
+O que consiste na produção deste projeoto?
