@@ -14,7 +14,7 @@
          * url da página
          * @var string
          */
-        private $url;
+        private $uri;
 
         /**
          * Paramentros da url ($_GET)
