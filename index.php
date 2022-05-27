@@ -9,7 +9,7 @@ use \App\Controller\Pages\Home;
 
 
 
-define('URL', 'http://localhost/projetos/testes/excellent_sistemas/crud_produtos');
+define('URL', 'http://localhost/crud_produtos');
 
 
 
