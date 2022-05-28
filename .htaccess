@@ -2,5 +2,5 @@
 RewriteEngine on
 
 # REGRA DO REWRITE TUDO PARA O INDEX
-# RewriteCoud %{REQUEST_FILENAME} !-f
-# RewriteRule ^(.*)$ /index.php [QSA,NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ /index.php [QSA,NC]

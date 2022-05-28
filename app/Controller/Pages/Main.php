@@ -34,27 +34,18 @@ class Main{
     }
 
     /**
-     * Método responsável por retornar o footer
-     * @return string
-     */
-    
-    private static function getFooter(){
-        return View::render('pages/layouts/components/footer');
-    }
-
-    /**
      * Método responsável por retornar o conteúdo da página de layout main (principal)
      * @return  string
      */
 
-    public static function getMain($title,$content){
+    public static function getMain($title,$content,$footer){
         return View::render('pages/layouts/Main',[
             'title' => $title,
             'loading' => self::getLoading(),
             'nav-desktop' => self::getNavdesktop(),
             'nav-mobile' => self::getNavmobile(),
             'content' => $content,
-            'footer' => self::getFooter()
+            'footer' => $footer
         ]);
     }
 
