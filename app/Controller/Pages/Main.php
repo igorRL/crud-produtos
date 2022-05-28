@@ -42,10 +42,11 @@ class Main{
         return View::render('pages/layouts/Main',[
             'title' => $title,
             'loading' => self::getLoading(),
-            'nav-desktop' => self::getNavdesktop(),
-            'nav-mobile' => self::getNavmobile(),
+            'nav-desktop' => self::getNavdesktop(URL),
+            'nav-mobile' => self::getNavmobile(URL),
             'content' => $content,
-            'footer' => $footer
+            'footer' => $footer,
+            'URL' => URL
         ]);
     }
 

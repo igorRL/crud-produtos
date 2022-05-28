@@ -5,6 +5,7 @@ namespace App\Http;
 // Closure é um método executável (importa o objeto indicado pela url da página e seu conteúdo)
 use \Closure;
 use \Exception;
+use \ReflectionFunction;
 
 class Router{
 
@@ -82,6 +83,8 @@ class Router{
      */
     private function addRoute($method, $route, $params = [])
     {      
+        
+        
         // validação dos parametros
         foreach($params as $key=>$value){
             if($value instanceof Closure){
@@ -90,6 +93,19 @@ class Router{
                 continue;
             }
         }
+
+
+        // VARIAVEIS DA ROTA
+        $params['variables'] = [];
+
+
+        // PADRÃO DE VALIDAÇÃO DAS VARIAVEIS
+        $patternVariable = '/{(.*?)}/';
+        if(preg_match_all($patternVariable,$route,$matches)){
+            $route = preg_replace($patternVariable,'(.*?)',$route);
+            $params['variables'] = $matches[1];
+        }
+
         // Criando um pardrão para validar a rota
         $patternRoute = '/^'.str_replace('/','\/',$route).'$/';
 
@@ -181,9 +197,18 @@ class Router{
         foreach($this->routes as $patternRoute=>$methods){
             
             // verificar se a URI bate com o padrão
-            if(preg_match($patternRoute,$uri)){
+            if(preg_match($patternRoute,$uri,$matches)){
                 // Verifica o método
                 if(isset($methods[$httpMethod])){
+                    unset($matches[0]);
+
+                    // VARIAVEIS PROCESSADAS
+                    $keys = $methods[$httpMethod]['variables'];
+                    // COMBINAR AS CHAVES
+                    $methods[$httpMethod]['variables'] = array_combine($keys,$matches);
+                    // ADICIONANDO AS REQUESTS
+                    $methods[$httpMethod]['variables']['request'] = $this->request;
+
                     // retorno dos paramentros da rota
                     return $methods[$httpMethod];
                 }
@@ -211,6 +236,7 @@ class Router{
             //obter a rota atual
             $route = $this->getRoute();
 
+
             // verifica o controlador
             if(!isset($route['controller'])){
                 throw new Exception("A URL não pode ser processada", 500);
@@ -218,6 +244,14 @@ class Router{
 
             // argumentos da função
             $args = [];
+
+            // REFLETION
+            $reflection = new ReflectionFunction($route['controller']);
+            foreach($reflection->getParameters() as $parameter){
+                $name = $parameter->getName();
+                $args[$name] = $route['variables'][$name] ?? '';
+
+            }
 
             // retorna a execussão da função
             return call_user_func_array($route['controller'],$args);
