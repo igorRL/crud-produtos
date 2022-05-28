@@ -2,10 +2,16 @@
 
 require __DIR__.'/vendor/autoload.php';
 
+use App\Common\Environment;
 use App\Http\Router;
 use App\Utils\View;
 
-define('URL', 'http://localhost:8080');
+// RECEBENDO VARIAVEIS DE AMBIENTE
+Environment::load(__DIR__);
+$env = getenv();
+
+// DEFININDO A CONSTANTE URL
+define('URL', getenv('URL'));
 
 // DEFINE O VALOR PADRÃO DAS VARIÁVEIS
 View::init([
