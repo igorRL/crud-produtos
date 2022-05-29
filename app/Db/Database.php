@@ -196,62 +196,77 @@ class Database{
     public function resize()
     {
 
+
+        //ARRAY QUE CONTEM AS DIMENSÃO DAS ALTURAS DAS IMAGENS QUE DEVEM SER GERADAS
+        $resizes=[470,360,220,100];
+
+        
+
+
+        // GERANDO IMAGENS
+        foreach($resizes as $key => $newHeight)
+        {
+            $this->updateImage($newHeight);   
+        }
+    }
+
+
+
+
+    public function updateImage($newHeight)
+    {
+
         // calculo de redimencionamento
         $tmp_image = $this->image['tmp_image'];
         $originalHeight = imagesy($tmp_image);
         $originalWidth = imagesx($tmp_image);
 
 
-        //ARRAY QUE CONTEM AS DIMENSÃO DAS ALTURAS DAS IMAGENS QUE DEVEM SER GERADAS
-        $resizes=[470,360,220,100];
+        // CALCULO DA LARGURA
+        $percentageCalc = $newHeight*100/$originalHeight;
+        $newWidth = floor($percentageCalc * $originalWidth/100);
+
+
+
+        // GERANDO IMAGEM
+        $resize_image = imagecreatetruecolor($newWidth,$newHeight);
+        imagealphablending($resize_image, false);
+        imagesavealpha($resize_image, true);
+        $transparent = imagecolorallocatealpha($resize_image, 255, 255, 255, 127);
+        imagefilledrectangle($resize_image, 0, 0, $newWidth, $newHeight, $transparent);
+        imagecopyresampled($resize_image, $tmp_image,0,0,0,0,$newWidth,$newHeight,$originalWidth,$originalHeight);
+
+
         
 
-        // GERANDO IMAGENS
-        foreach($resizes as $newHeight =>$values)
+        
+        // SE O DIRETÓRIO NÃO EXISTE CRIAR
+        $directory = __DIR__."/../../public/img/products/";
+
+        if (!file_exists($directory))
         {
-
-            // CALCULO DA LARGURA
-            $percentageCalc = $newHeight*100/$originalHeight;
-            $newWidth = floor($percentageCalc * $originalWidth/100);
-
-
-
-            // GERANDO IMAGEM
-            $resize_image = imagecreatetruecolor($newWidth,$newHeight);
-            imagealphablending($resize_image, false);
-            imagesavealpha($resize_image, true);
-            $transparent = imagecolorallocatealpha($resize_image, 255, 255, 255, 127);
-            imagefilledrectangle($resize_image, 0, 0, $newWidth, $newHeight, $transparent);
-            imagecopyresampled($resize_image, $tmp_image,0,0,0,0,$newWidth,$newHeight,$originalWidth,$originalHeight);
-
-
-            
-            // SE O DIRETÓRIO NÃO EXISTE CRIAR
-            $directory = __DIR__."/../../public/img/products/h-".$newHeight."px/";
-
-            if (!file_exists($directory))
-            {
-                mkdir($directory, 0777, true);
-            }
-
-
-            
-            // UPLOAD DA IMAGEM PARA O DIRETÓRIO
-            switch ($this->image['img_type'])
-            {
-                case 'jpeg':
-                    return imagejpeg($resize_image, $directory.$this->image['uniqid_name']);
-                    break;
-                case 'png':
-                    return imagepng($resize_image, $directory.$this->image['uniqid_name']);
-                    break;
-                case 'gif':
-                    return imagegif($resize_image, $directory.$this->image['uniqid_name']);
-                    break;
-            }
+            mkdir($directory, 0777, true);
         }
-    }
 
+
+        $directory = $directory."h-".$newHeight."px-";
+
+        
+        // UPLOAD DA IMAGEM PARA O DIRETÓRIO
+        switch ($this->image['img_type'])
+        {
+            case 'jpeg':
+                return imagejpeg($resize_image, $directory.$this->image['uniqid_name']);
+                break;
+            case 'png':
+                return imagepng($resize_image, $directory.$this->image['uniqid_name']);
+                break;
+            case 'gif':
+                return imagegif($resize_image, $directory.$this->image['uniqid_name']);
+                break;
+        }
+    
+    }
 
 
 

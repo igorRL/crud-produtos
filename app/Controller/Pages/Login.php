@@ -55,14 +55,20 @@ class Login extends Main
         $postVars = $request->getPostVars();
         $files = $request->getFiles();
 
+        
         $obProduct = new Products;
         $obProduct->productId = $postVars['product-id'];
         $obProduct->productStoke = $postVars['product-stoke'];
         $obProduct->productTitle = $postVars['product-title'];
+        $obProduct->productPrice = $postVars['product-price'];
         $obProduct->productDescription = $postVars['product-description'];
         $obProduct->productImages = $files['product-images'];
 
-
+        if($obProduct->register())
+        {
+            // upload dos arquivos
+            $obProduct->upLoadFiles();
+        }
 
         return self::getLogin();
     }

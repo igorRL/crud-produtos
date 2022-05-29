@@ -52,10 +52,6 @@ $obRouter->get('/login', [
 // ROTA LOGIN
 $obRouter->post('/login', [
     function($request){
-        echo '<pre>';
-        print_r($request);
-        echo '</pre>';
-        exit;
-        return new Response(200, Pages\Login::getLogin());
+        return new Response(200, Pages\Login::insertProduct($request));
     }
 ]);

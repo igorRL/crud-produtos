@@ -30,6 +30,13 @@ class Products{
     public $productStoke;
 
     /**
+     * Preço do produto
+     *
+     * @var string
+     */
+    public $productPrice;
+
+    /**
      * Título do produto
      *
      * @var string
@@ -72,7 +79,8 @@ class Products{
             'product_id'=>$this->productId,
             'product_title'=>$this->productTitle,
             'product_description'=>$this->productDescription,
-            'product_stoke'=>$this->productStoke
+            'product_stoke'=>$this->productStoke,
+            'product_price'=>$this->productPrice
         ]);
         $this->insertData = true;
         return $this->insertData;
