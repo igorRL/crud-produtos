@@ -207,7 +207,7 @@ class Database{
         
 
         // GERANDO IMAGENS
-        foreach($resizes as $newHeight)
+        foreach($resizes as $newHeight =>$values)
         {
 
             // CALCULO DA LARGURA
