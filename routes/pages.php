@@ -47,3 +47,15 @@ $obRouter->get('/login', [
         return new Response(200, Pages\Login::getLogin());
     }
 ]);
+
+
+// ROTA LOGIN
+$obRouter->post('/login', [
+    function($request){
+        echo '<pre>';
+        print_r($request);
+        echo '</pre>';
+        exit;
+        return new Response(200, Pages\Login::getLogin());
+    }
+]);
