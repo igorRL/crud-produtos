@@ -51,10 +51,6 @@ class Login extends Main
      */
     public static function insertProduct($request)
     {
-        echo '<pre>';
-        print_r($request);
-        echo '</pre>';
-        exit;
         // DADOS DO POST VARS
         $postVars = $request->getPostVars();
         $files = $request->getFiles();
@@ -66,11 +62,7 @@ class Login extends Main
         $obProduct->productDescription = $postVars['product-description'];
         $obProduct->productImages = $files['product-images'];
 
-        if($obProduct->register())
-        {
-            // upload dos arquivos
-            $obProduct->upLoadFiles();
-        }
+
 
         return self::getLogin();
     }

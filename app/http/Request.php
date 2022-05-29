@@ -31,6 +31,13 @@
         private $postVars = [];
 
         /**
+         * Variaveis recebidas do post da página ($_Post)
+         *
+         * @var array
+         */
+        private $files = [];
+
+        /**
          * Cabeçalhos da requisição
          *
          * @var array
@@ -44,6 +51,7 @@
         {
             $this->queryParams = $_GET ?? [];
             $this->postVars = $_POST ?? [];
+            $this->files = $_FILES ?? [];
             $this->headers = getallheaders();
             $this->httpMethod = $_SERVER['REQUEST_METHOD'];
             $this->uri = $_SERVER['REQUEST_URI'];
@@ -92,5 +100,14 @@
          */
         public function getPostVars(){
             return $this->postVars;
+        }
+
+        /**
+         * Método responsável por retornar os POSTs da página
+         *
+         * @return array
+         */
+        public function getFiles(){
+            return $this->files;
         }
     }
