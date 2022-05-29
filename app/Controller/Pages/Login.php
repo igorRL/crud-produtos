@@ -4,6 +4,7 @@ namespace App\Controller\Pages;
 
 use App\Utils\View;
 use App\Model\Entity\Organization;
+use App\Model\Entity\Products;
 
 class Login extends Main
 {
@@ -38,5 +39,39 @@ class Login extends Main
 
         // ENVIAR CONTEÚDOS RENDERIZADOS PARA MAIN
         return parent::getMain('Área do usuário', $content, $footer);
+    }
+
+
+
+    /**
+     * Método resonsável por cadastrar um novo produto
+     *
+     * @param request $request
+     * @return string
+     */
+    public static function insertProduct($request)
+    {
+        echo '<pre>';
+        print_r($request);
+        echo '</pre>';
+        exit;
+        // DADOS DO POST VARS
+        $postVars = $request->getPostVars();
+        $files = $request->getFiles();
+
+        $obProduct = new Products;
+        $obProduct->productId = $postVars['product-id'];
+        $obProduct->productStoke = $postVars['product-stoke'];
+        $obProduct->productTitle = $postVars['product-title'];
+        $obProduct->productDescription = $postVars['product-description'];
+        $obProduct->productImages = $files['product-images'];
+
+        if($obProduct->register())
+        {
+            // upload dos arquivos
+            $obProduct->upLoadFiles();
+        }
+
+        return self::getLogin();
     }
 }
