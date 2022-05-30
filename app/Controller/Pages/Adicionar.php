@@ -7,49 +7,14 @@ use App\Utils\View;
 use App\Model\Entity\Organization;
 use App\Model\Entity\Products;
 
-class Login extends Main
+class Adicionar extends Main
 {
-
-    /**
-     * Método responsável por retornar os produtos renderizados para a página
-     *
-     * @return string
-     */
-    private static function getProductsItems()
-    {
-        $content = '';
-        // PRODUTOS ARRAY COLETADOS DO BANCO
-        $results = (new Products('products'))->getProducts('enable=true','id DESC');
-        $contador = 1;
-        // RENDERIZA O ITEM
-        while($obProducts=$results->fetchObject(Products::class))
-        {
-            $serializa_images = $obProducts->product_images;
-            $unserializedData = unserialize($serializa_images);
-            $principalImage = $unserializedData[0];
-            $principalImageSrc = "/public/img/products/h-100px-".$principalImage;
-            // DADOS RENDERIZADOS DOS PRODUTOS
-            $content.= View::render('pages/Product/ProductTable', [
-                'id' => $obProducts->id,
-                'product_title' => $obProducts->product_title,
-                'product_price' => $obProducts->product_price,
-                'product_description' => $obProducts->product_description,
-                'product_stoke' => $obProducts->product_stoke,
-                'contador' => $contador,
-                'image_src' => $principalImageSrc,
-                'URL' => URL
-            ]);
-            $contador++;
-        }
-
-        return $content;
-    }
 
     /**
      * Método responsável por retornar o conteúdo (view) da home
      * @return  string
      */
-    public static function getLogin()
+    public static function getAdicionar()
     {
 
         
@@ -58,7 +23,7 @@ class Login extends Main
 
 
         // DADOS RENDERIZADOS DO CONTEÚDO DA PÀGINA
-        $content = View::render('pages/login', [
+        $content = View::render('pages/adicionar', [
             'organization-name' => $obOrganization->name,
             'organization-description' => $obOrganization->description,
             'organization-site' => $obOrganization->site
@@ -73,12 +38,9 @@ class Login extends Main
             'date-year' =>date('Y'),
         ]);
 
-        
-        $productsRender = self::getProductsItems();
-
 
         // ENVIAR CONTEÚDOS RENDERIZADOS PARA MAIN
-        return parent::getProductsTable('Área do usuário', $content, $footer, $productsRender);
+        return parent::getMain('Área do usuário', $content, $footer);
     }
 
 
@@ -108,7 +70,6 @@ class Login extends Main
             // upload dos arquivos
             $obProduct->upLoadFiles();
         }
-
-        return self::getLogin();
+        return self::getAdicionar();
     }
 }

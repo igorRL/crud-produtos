@@ -1,19 +1,12 @@
 <tr>
     <th scope="row">{{contador}}</th>
-    <td>Imagem</td>
+    <td><img src="{{image_src}}" alt="" style="max-width: 80px;height:auto"></td>
     <td>{{product_title}}</td>
     <td>{{product_stoke}}</td>
     <td>R$ {{product_price}}</td>
+
     <td>
-        <button class="product-status-disabled-button btn btn-warning" onclick="productAction('{{id}}', 'disabled')">
-            <i class="far fa-eye-slash"></i>&nbsp
-        </button>
-        <button class="product-status-enable-button btn btn-success" onclick="productAction('{{id}}', 'enable')">
-            <i class="far fa-eye"></i>&nbsp
-        </button>
-    </td>
-    <td>
-        <a class="product-edit-button btn btn-primary" href="{{URL}}/products/{{id}}/edit">
+        <a class="product-edit-button btn btn-primary" href="{{URL}}/login/editar?id={{id}}">
             <i class="fas fa-edit"></i>
         </a>
     </td>

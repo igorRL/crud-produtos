@@ -17,11 +17,16 @@ class Home extends Main
     {
         $content = '';
         // PRODUTOS ARRAY COLETADOS DO BANCO
-        $results = (new Products('products'))->getProducts('','id DESC');
+        $results = (new Products('products'))->getProducts('enable=true','id DESC');
         $contador = 1;
         // RENDERIZA O ITEM
         while($obProducts=$results->fetchObject(Products::class))
         {
+            $serializa_images = $obProducts->product_images;
+            $unserializedData = unserialize($serializa_images);
+            $principalImage = $unserializedData[0];
+            $principalImageSrc = "/public/img/products/h-220px-".$principalImage;
+
             // DADOS RENDERIZADOS DOS PRODUTOS
             $content.= View::render('pages/Product/Product', [
                 'id' => $obProducts->id,
@@ -29,7 +34,8 @@ class Home extends Main
                 'product_price' => $obProducts->product_price,
                 'product_description' => $obProducts->product_description,
                 'product_stoke' => $obProducts->product_stoke,
-                'contador' => $contador,
+                'image_src' => $principalImageSrc,
+                'contador' => $contador
             ]);
             $contador++;
         }

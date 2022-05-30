@@ -7,36 +7,26 @@ use App\Utils\View;
 use App\Model\Entity\Organization;
 use App\Model\Entity\Products;
 
-class Login extends Main
+class Editar extends Main
 {
-
-    /**
-     * Método responsável por retornar os produtos renderizados para a página
-     *
-     * @return string
-     */
-    private static function getProductsItems()
+    private static function getProductsItem()
     {
+        $id = $_GET['id'];
         $content = '';
         // PRODUTOS ARRAY COLETADOS DO BANCO
-        $results = (new Products('products'))->getProducts('enable=true','id DESC');
+        $results = (new Products('products'))->getProducts("id='$id'",'id DESC');
         $contador = 1;
         // RENDERIZA O ITEM
         while($obProducts=$results->fetchObject(Products::class))
         {
-            $serializa_images = $obProducts->product_images;
-            $unserializedData = unserialize($serializa_images);
-            $principalImage = $unserializedData[0];
-            $principalImageSrc = "/public/img/products/h-100px-".$principalImage;
             // DADOS RENDERIZADOS DOS PRODUTOS
-            $content.= View::render('pages/Product/ProductTable', [
+            $content.= View::render('pages/editar', [
                 'id' => $obProducts->id,
                 'product_title' => $obProducts->product_title,
                 'product_price' => $obProducts->product_price,
                 'product_description' => $obProducts->product_description,
                 'product_stoke' => $obProducts->product_stoke,
                 'contador' => $contador,
-                'image_src' => $principalImageSrc,
                 'URL' => URL
             ]);
             $contador++;
@@ -49,7 +39,7 @@ class Login extends Main
      * Método responsável por retornar o conteúdo (view) da home
      * @return  string
      */
-    public static function getLogin()
+    public static function getEditar()
     {
 
         
@@ -57,12 +47,12 @@ class Login extends Main
         $obOrganization = new Organization;
 
 
-        // DADOS RENDERIZADOS DO CONTEÚDO DA PÀGINA
-        $content = View::render('pages/login', [
-            'organization-name' => $obOrganization->name,
-            'organization-description' => $obOrganization->description,
-            'organization-site' => $obOrganization->site
-        ]);
+        // // DADOS RENDERIZADOS DO CONTEÚDO DA PÀGINA
+        // $content = View::render('pages/editar', [
+        //     'organization-name' => $obOrganization->name,
+        //     'organization-description' => $obOrganization->description,
+        //     'organization-site' => $obOrganization->site
+        // ]);
 
 
         // DADOS RENDERIZADOS DO FOOTHER DA PÁGINA
@@ -73,12 +63,12 @@ class Login extends Main
             'date-year' =>date('Y'),
         ]);
 
-        
-        $productsRender = self::getProductsItems();
+
+        $content = self::getProductsItem();
 
 
         // ENVIAR CONTEÚDOS RENDERIZADOS PARA MAIN
-        return parent::getProductsTable('Área do usuário', $content, $footer, $productsRender);
+        return parent::getMain('Área do usuário', $content, $footer);
     }
 
 
@@ -89,26 +79,29 @@ class Login extends Main
      * @param request $request
      * @return string
      */
-    public static function insertProduct($request)
+    public static function updateProduct($request)
     {
         // DADOS DO POST VARS
         $postVars = $request->getPostVars();
         $files = $request->getFiles();
+        $id = $postVars['id'];
+        $productId = $postVars['product-id'];
+        $productStoke = $postVars['product-stoke'];
+        $productTitle = $postVars['product-title'];
+        $productDescription = $postVars['product-description'];
+        $productPrice = $postVars['product-price'];
+        $productImages = $files['product-images'];
 
-        $obProduct = new Products;
-        $obProduct->productId = $postVars['product-id'];
-        $obProduct->productStoke = $postVars['product-stoke'];
-        $obProduct->productTitle = $postVars['product-title'];
-        $obProduct->productDescription = $postVars['product-description'];
-        $obProduct->productPrice = $postVars['product-price'];
-        $obProduct->productImages = $files['product-images'];
+        $conn = mysqli_connect('localhost', 'root', 'root', 'crud-products');
+        $sql = "UPDATE products SET product_id='$productId', product_title='$productTitle', product_description='$productDescription', product_stoke='$productStoke', product_price='$productPrice' WHERE id='$id'";
 
-        if($obProduct->register())
-        {
-            // upload dos arquivos
+        if (mysqli_query($conn, $sql)) {
+            $obProduct = new Products;
+            $obProduct->productId = $postVars['id'];
+            $obProduct->productImages = $files['product-images'];
             $obProduct->upLoadFiles();
         }
-
-        return self::getLogin();
+        
+        return self::getEditar();
     }
 }

@@ -1,74 +1,9 @@
 <h1 class="text-secondary">Lista de produtos</h1>
 <hr>
-
 <!-- botão de editar -->
-<a class="product-edit-button btn btn-primary" href="{{URL}}/products/new/create">
+<a class="product-edit-button btn btn-primary" href="{{URL}}/login/adicionar">
     <i class="fas fa-plus-circle"></i> Novo produto
 </a>
-
-<hr>
-
-
-<h1>Adicionar novo produto</h1>
-<!-- formulário de novo produto -->
-<form method="post" enctype="multipart/form-data">
-
-    <div class="d-flex mb-3">
-        <!-- id -->
-        <div class="pr-2 py-2">
-            <label for="newProduct-input-id" class="form-label text-secondary">ID do produto</label>
-            <input required type="text" name="product-id" class="form-control border text-center" />
-        </div>
-
-
-        <!-- Estoque -->
-        <div class="p-2">
-            <label for="newProduct-input-stoke" class="form-label text-secondary">Estoque</label>
-            <input required type="number" name="product-stoke" class="form-control border text-center" />
-        </div>
-
-
-        <!-- Preço -->
-        <div class="p-2">
-            <label for="newProduct-input-price" class="form-label text-secondary">Preço de venda</label>
-            <input required type="text" name="product-price" class="form-control border text-center" />
-        </div>
-
-
-    </div>
-
-    
-    <!-- Título -->
-    <div class="mb-3">
-        <label for="newProduct-input-title" class="form-label text-secondary">Título</label>
-        <input required type="text" name="product-title" class="form-control border" />
-    </div>
-
-    
-    <!-- Descrição -->
-    <div class="mb-3">
-        <label for="newProduct-input-description" class="form-label text-secondary">Descrição</label>
-        <textarea required type="text" name="product-description" class="form-control border"></textarea>
-    </div>
-    
-    <!-- imagens -->
-    <div class="mb-3">
-        <label for="newProduct-input-images" class="form-label text-secondary">Imagens</label>
-        <input required id="newProduct-input-images" type="file" name="product-images[]" class="form-control border text-center" multiple="multiple" accept="image/png, image/gif, image/jpeg" onchange="newProductChangeImage(event);" style="display: block;" />
-    </div>
-
-
-    <!-- box com imagens -->
-    <div id="caixa_imagens_novo_produto" class="d-flex align-items-center" style="max-width: 100%;overflow-y: auto;">
-    </div>
-
-    <!-- Submit -->
-    <button type="submit" class="btn btn-success">Criar produto</button>
-
-
-
-</form>
-
 <hr>
 
 <section id="products-table" class="mt-5">
@@ -81,7 +16,6 @@
                 <th scope="col">Título</th>
                 <th scope="col">Estoque</th>
                 <th scope="col">Preço</th>
-                <th scope="col">Status</th>
                 <th scope="col">Editar</th>
                 <th scope="col">Apagar</th>
               </tr>
@@ -91,3 +25,21 @@
         </tbody>
     </table>
 </section>
+
+<div id="modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmação</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="modal_close()"></button>
+        </div>
+        <div class="modal-body">
+          <p>Tem certeza que deseja excluir esse item?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="modal_close()">Cancelar</button>
+          <button id="excluir_button" type="button" class="btn btn-danger">excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>

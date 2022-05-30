@@ -25,4 +25,18 @@ class Login
             'email'=> $obUser->email
         ];
     }
+
+    public static function isLogged()
+    {
+        self::init();
+        return isset($_SESSION['admin']['usuario']['id']);
+    }
+
+
+    public static function logout()
+    {
+        self::init();
+        unset($_SESSION['admin']['usuario']);
+        return true;
+    }
 }

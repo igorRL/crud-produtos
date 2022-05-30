@@ -7,6 +7,8 @@ use \PDO;
 use \PDOException;
 
 class Database{
+
+
     /**
      * Host de conexão com o banco de dados
      * @var string
@@ -158,6 +160,7 @@ class Database{
         $id = $values['id'];
         $files = $values['files'];
         $qtd_imagens = count($files['name']);
+        $imagesArray = array();
         for ($i=0; $i < $qtd_imagens; $i++)
         { 
             // variaveis
@@ -166,8 +169,7 @@ class Database{
             $this->image['uniqid_name'] = uniqid().$this->image['name'];
             $this->image['tmp_name'] = $files['tmp_name'][$i];
 
-
-
+            $imagesArray[] = $this->image['uniqid_name'];
 
             switch ($this->image['type']) {
                 case 'image/jpeg':
@@ -191,6 +193,12 @@ class Database{
             // gerar imagens do tamanho correto para serem usadas no app
             $this->resize();
         }
+
+        $serialize = serialize($imagesArray);
+
+        $query ="UPDATE products SET product_images='$serialize' where id='$id'";
+        return $this->execute($query);
+
     }
 
     public function resize()
@@ -273,7 +281,7 @@ class Database{
      * @param  string $fields
      * @return PDOStatement
      */
-    public function select($where = '', $order = '', $limit = '', $fields = '*')
+    public function select($where = 'enable=true', $order = '', $limit = '', $fields = '*')
     {
         //DADOS DA QUERY
         $where = strlen($where) ? 'WHERE '.$where : '';
@@ -286,7 +294,6 @@ class Database{
         //EXECUTA A QUERY
         return $this->execute($query);
     }
-
 
 
 

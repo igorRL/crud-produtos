@@ -1,0 +1,61 @@
+<h1>Adicionar novo produto</h1>
+
+<hr>
+<!-- formulário de novo produto -->
+<form method="post" enctype="multipart/form-data">
+
+    <div class="d-flex mb-3">
+        <!-- id -->
+        <div class="pr-2 py-2">
+            <label for="newProduct-input-id" class="form-label text-secondary">ID do produto</label>
+            <input required type="text" name="product-id" class="form-control border text-center" />
+        </div>
+
+
+        <!-- Estoque -->
+        <div class="p-2">
+            <label for="newProduct-input-stoke" class="form-label text-secondary">Estoque</label>
+            <input required type="number" name="product-stoke" class="form-control border text-center" />
+        </div>
+
+
+        <!-- Preço -->
+        <div class="p-2">
+            <label for="newProduct-input-price" class="form-label text-secondary">Preço de venda</label>
+            <input required type="text" name="product-price" class="form-control border text-center" />
+        </div>
+
+
+    </div>
+
+    
+    <!-- Título -->
+    <div class="mb-3">
+        <label for="newProduct-input-title" class="form-label text-secondary">Título</label>
+        <input required type="text" name="product-title" class="form-control border" />
+    </div>
+
+    
+    <!-- Descrição -->
+    <div class="mb-3">
+        <label for="newProduct-input-description" class="form-label text-secondary">Descrição</label>
+        <textarea required type="text" name="product-description" class="form-control border"></textarea>
+    </div>
+    
+    <!-- imagens -->
+    <div class="mb-3">
+        <label for="newProduct-input-images" class="form-label text-secondary">Imagens</label>
+        <input required id="newProduct-input-images" type="file" name="product-images[]" class="form-control border text-center" multiple="multiple" accept="image/png, image/gif, image/jpeg" onchange="newProductChangeImage(event);" style="display: block;" />
+    </div>
+
+
+    <!-- box com imagens -->
+    <div id="caixa_imagens_novo_produto" class="d-flex align-items-center" style="max-width: 100%;overflow-y: auto;">
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="btn btn-success">Criar produto</button>
+
+
+
+</form>

@@ -40,10 +40,14 @@ class Login extends Page{
 
         SessionAdminLogin::login($obUser);
         
+        $request->getRouter()->redirect("/admin");
 
-        echo '<pre>';
-        print_r($_SESSION);
-        echo '</pre>';
-        exit;
+    }
+
+    public static function setLogout($request)
+    {
+        SessionAdminLogin::logout();
+        $request->getRouter()->redirect("/admin/login");
+        
     }
 }
