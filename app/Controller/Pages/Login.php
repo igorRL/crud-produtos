@@ -20,7 +20,7 @@ class Login extends Main
         $content = '';
         // PRODUTOS ARRAY COLETADOS DO BANCO
         $results = (new Products('products'))->getProducts('','id DESC');
-
+        $contador = 1;
         // RENDERIZA O ITEM
         while($obProducts=$results->fetchObject(Products::class))
         {
@@ -30,7 +30,10 @@ class Login extends Main
                 'product_title' => $obProducts->product_title,
                 'product_price' => $obProducts->product_price,
                 'product_description' => $obProducts->product_description,
+                'product_stoke' => $obProducts->product_stoke,
+                'contador' => $contador,
             ]);
+            $contador++;
         }
 
         return $content;
@@ -91,6 +94,7 @@ class Login extends Main
         $obProduct->productStoke = $postVars['product-stoke'];
         $obProduct->productTitle = $postVars['product-title'];
         $obProduct->productDescription = $postVars['product-description'];
+        $obProduct->productPrice = $postVars['product-price'];
         $obProduct->productImages = $files['product-images'];
 
         if($obProduct->register())

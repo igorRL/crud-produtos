@@ -67,4 +67,21 @@ class Main{
         ]);
     }
 
+    /**
+     * Método responsável por retornar o conteúdo da página de layout main (principal)
+     * @return  string
+     */
+    public static function getProductsList($title,$content,$footer,$products,){
+        return View::render('pages/layouts/Main',[
+            'title' => $title,
+            'loading' => self::getLoading(),
+            'nav-desktop' => self::getNavdesktop(URL),
+            'nav-mobile' => self::getNavmobile(URL),
+            'content' => $content,
+            'footer' => $footer,
+            'URL' => URL,
+            'products' => $products
+        ]);
+    }
+
 }

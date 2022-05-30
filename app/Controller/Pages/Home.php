@@ -4,9 +4,38 @@ namespace App\Controller\Pages;
 
 use App\Utils\View;
 use App\Model\Entity\Organization;
+use App\Model\Entity\Products;
 
 class Home extends Main
 {
+    /**
+     * Método responsável por retornar os produtos renderizados para a página
+     *
+     * @return string
+     */
+    private static function getProductsItems()
+    {
+        $content = '';
+        // PRODUTOS ARRAY COLETADOS DO BANCO
+        $results = (new Products('products'))->getProducts('','id DESC');
+        $contador = 1;
+        // RENDERIZA O ITEM
+        while($obProducts=$results->fetchObject(Products::class))
+        {
+            // DADOS RENDERIZADOS DOS PRODUTOS
+            $content.= View::render('pages/Product/Product', [
+                'id' => $obProducts->id,
+                'product_title' => $obProducts->product_title,
+                'product_price' => $obProducts->product_price,
+                'product_description' => $obProducts->product_description,
+                'product_stoke' => $obProducts->product_stoke,
+                'contador' => $contador,
+            ]);
+            $contador++;
+        }
+
+        return $content;
+    }
 
     /**
      * Método responsável por retornar o conteúdo (view) da home
@@ -36,7 +65,10 @@ class Home extends Main
             'date-year' =>date('Y'),
         ]);
 
+
+        $productsRender = self::getProductsItems();
+
         // ENVIAR CONTEÚDOS RENDERIZADOS PARA MAIN
-        return parent::getMain('Bem vindo!', $content, $footer);
+        return parent::getProductsList('Bem vindo!', $content, $footer, $productsRender);
     }
 }
