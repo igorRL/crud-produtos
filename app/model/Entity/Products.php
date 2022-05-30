@@ -110,7 +110,7 @@ class Products{
      * @param string $fields
      * @return PDOStatement
      */
-    public static function getProducts($where = null, $order = null, $limit = null, $fields = "*" )
+    public static function getProducts($where = '', $order = '', $limit = '', $fields = "*" )
     {
         return (new Database('products'))->select($where, $order, $limit, $fields);
     }

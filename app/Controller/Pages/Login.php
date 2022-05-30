@@ -2,12 +2,39 @@
 
 namespace App\Controller\Pages;
 
+use App\Db\Database;
 use App\Utils\View;
 use App\Model\Entity\Organization;
 use App\Model\Entity\Products;
 
 class Login extends Main
 {
+
+    /**
+     * Método responsável por retornar os produtos renderizados para a página
+     *
+     * @return string
+     */
+    private static function getProductsItems()
+    {
+        $content = '';
+        // PRODUTOS ARRAY COLETADOS DO BANCO
+        $results = (new Products('products'))->getProducts('','id DESC');
+
+        // RENDERIZA O ITEM
+        while($obProducts=$results->fetchObject(Products::class))
+        {
+            // DADOS RENDERIZADOS DOS PRODUTOS
+            $content.= View::render('pages/Product/ProductTable', [
+                'id' => $obProducts->id,
+                'product_title' => $obProducts->product_title,
+                'product_price' => $obProducts->product_price,
+                'product_description' => $obProducts->product_description,
+            ]);
+        }
+
+        return $content;
+    }
 
     /**
      * Método responsável por retornar o conteúdo (view) da home
@@ -37,8 +64,12 @@ class Login extends Main
             'date-year' =>date('Y'),
         ]);
 
+        
+        $productsRender = self::getProductsItems();
+
+
         // ENVIAR CONTEÚDOS RENDERIZADOS PARA MAIN
-        return parent::getMain('Área do usuário', $content, $footer);
+        return parent::getProductsTable('Área do usuário', $content, $footer, $productsRender);
     }
 
 

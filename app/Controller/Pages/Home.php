@@ -35,7 +35,6 @@ class Home extends Main
             'organization-site' => $obOrganization->site,
             'date-year' =>date('Y'),
         ]);
-        
 
         // ENVIAR CONTEÚDOS RENDERIZADOS PARA MAIN
         return parent::getMain('Bem vindo!', $content, $footer);
