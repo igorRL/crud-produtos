@@ -227,7 +227,6 @@ class Database{
         $newWidth = floor($percentageCalc * $originalWidth/100);
 
 
-
         // GERANDO IMAGEM
         $resize_image = imagecreatetruecolor($newWidth,$newHeight);
         imagealphablending($resize_image, false);
@@ -238,18 +237,14 @@ class Database{
 
 
         
-
-        
         // SE O DIRETÓRIO NÃO EXISTE CRIAR
         $directory = __DIR__."/../../public/img/products/";
-
         if (!file_exists($directory))
         {
             mkdir($directory, 0777, true);
         }
-
-
         $directory = $directory."h-".$newHeight."px-";
+
 
         
         // UPLOAD DA IMAGEM PARA O DIRETÓRIO

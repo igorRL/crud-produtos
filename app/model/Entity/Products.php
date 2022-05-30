@@ -100,4 +100,19 @@ class Products{
         $this->uploadStatus = true;
     }
 
+
+    /**
+     * Método responsável por retornar os produtos
+     *
+     * @param string $where
+     * @param string $order
+     * @param string $limit
+     * @param string $fields
+     * @return PDOStatement
+     */
+    public static function getProducts($where = null, $order = null, $limit = null, $fields = "*" )
+    {
+        return (new Database('products'))->select($where, $order, $limit, $fields);
+    }
+
 }
