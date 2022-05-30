@@ -1,0 +1,33 @@
+<?php
+
+
+use \App\Http\Response;
+use \App\Controller\Admin;
+
+
+
+// ROTA ADMIN
+$obRouter->get('/admin', [
+    function($request){
+        return new Response(200, "Admin");
+    }
+]);
+
+
+
+// ROTA LOGIN
+$obRouter->get('/admin/login', [
+    function($request){
+        return new Response(200, Admin\Login::getLogin($request));
+    }
+]);
+
+
+
+// ROTA LOGIN (POST)
+$obRouter->post('/admin/login', [
+    function($request){
+        
+        return new Response(200, Admin\Login::setLogin($request));
+    }
+]);

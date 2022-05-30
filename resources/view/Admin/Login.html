@@ -1,0 +1,25 @@
+<div class="position-relative d-flex w-100 align-items-center justify-content-center">
+    <div class="container-fluid p-0">
+      <div class="container text-center" style="max-width: 400px">
+        {{status}}
+        <form method="POST">
+          <div class="p-3 bg-light shadow-lg rounded">
+            <div class="d-flex align-items-center justify-content-center p-4">
+              <h1 class="text-prudy p-0 m-0">Logn-in</h1>
+            </div>
+            <div class="form-label-group mb-3">
+              <label for="usuario" class="mb-0">usuário</label>
+              <input type="text" id="usuario" name="usuario" class="form-control" placeholder="e-mail ou cpf" required autofocus>
+            </div>
+            <div class="form-label-group mb-3">
+              <label for="senha" class="mb-0">senha</label>
+              <input type="password" id="senha" name="senha" class="form-control" placeholder="sua senha" required>
+            </div>
+            <!-- botão de entrar -->
+            <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="return recaptcha_validate()">Entrar</button>
+          </div>
+        </form>
+        <div id="esqueciSenha"></div>
+      </div>
+    </div>
+  </div>
